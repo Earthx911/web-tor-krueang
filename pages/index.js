@@ -1,103 +1,93 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ตรวจสอบเครื่อง Apple</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Sarabun', sans-serif;
-      display: flex;
-      min-height: 100vh;
-      color: white;
-    }
-    .left, .right {
-      width: 50%;
-      height: 100vh;
-    }
-    .left {
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .card {
-      background: #1c1c1e;
-      padding: 2rem;
-      border-radius: 20px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
-      text-align: center;
-    }
-    .logo {
-      width: 60px;
-      filter: invert(1);
-      margin-bottom: 1rem;
-    }
-    .title {
-      font-size: 1.6rem;
-      margin-bottom: 2rem;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      text-align: center;
-    }
-    button {
-      width: 100%;
-      padding: 0.8rem;
-      border-radius: 8px;
-      border: none;
-      background: #fff;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .right {
-      background: #fff;
-      position: relative;
-    }
-    .right img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-    .quote {
-      position: absolute;
-      bottom: 2rem;
-      right: 2rem;
-      font-size: 1.1rem;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-    }
-  </style>
-</head>
-<body>
-  <div class="left">
-    <div class="card">
-      <img src="/Apple_logo_black.svg" alt="Apple Logo" class="logo" />
-      <h1 class="title">ตรวจสอบเครื่อง Apple</h1>
-      <input type="text" placeholder="กรอก IMEI หรือ Serial Number" />
-      <button>🔍 ตรวจสอบตอนนี้</button>
-    </div>
-  </div>
-  <div class="right">
-    <img src="/Steve jobs.webp" alt="Steve Jobs" />
-    <div class="quote">ข้าคือคนปลุกสตีฟจ็อป โดย Develop Earth</div>
-  </div>
-</body>
-</html>
+// pages/index.js
+import Head from 'next/head';
+
+export default function Home() {
+  return (
+    <>
+      <Head>
+        <title>ตรวจสอบเครื่อง Apple</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        minHeight: '100vh',
+        backgroundColor: '#000'
+      }}>
+        
+        {/* ฝั่งซ้าย: ฟอร์ม */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <div style={{
+            backgroundColor: '#1a1a1a',
+            padding: '2rem',
+            borderRadius: '16px',
+            textAlign: 'center',
+            width: '100%',
+            maxWidth: '400px',
+          }}>
+            <img src="/Apple_logo_black.svg" alt="Apple Logo" style={{ width: '60px', filter: 'invert(1)', margin: '0 auto' }} />
+            <h1 style={{ color: '#fff', marginTop: '1rem' }}>ตรวจสอบเครื่อง <b>Apple</b></h1>
+            <input
+              placeholder="กรอก IMEI หรือ Serial Number"
+              style={{
+                marginTop: '1rem',
+                padding: '0.8rem',
+                width: '100%',
+                borderRadius: '8px',
+                border: 'none',
+                textAlign: 'center',
+                fontSize: '1rem'
+              }}
+            />
+            <button style={{
+              marginTop: '1rem',
+              padding: '0.8rem',
+              width: '100%',
+              borderRadius: '8px',
+              border: 'none',
+              backgroundColor: '#fff',
+              fontWeight: 'bold',
+              cursor: 'pointer'
+            }}>
+              🔍 ตรวจสอบตอนนี้
+            </button>
+          </div>
+        </div>
+
+        {/* ฝั่งขวา: รูป + คำ */}
+        <div style={{
+          flex: 1,
+          position: 'relative',
+        }}>
+          <img
+            src="/Steve jobs.webp"
+            alt="Steve Jobs"
+            style={{
+              width: '100%',
+              height: '100vh',
+              objectFit: 'cover',
+            }}
+          />
+          <p style={{
+            position: 'absolute',
+            bottom: '2rem',
+            right: '2rem',
+            color: '#fff',
+            fontSize: '1.2rem',
+            background: 'rgba(0,0,0,0.4)',
+            padding: '0.5rem 1rem',
+            borderRadius: '8px'
+          }}>
+            ข้าคือคนปลุกสตีฟจ็อป
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,164 +1,96 @@
-import Head from 'next/head';
-import { useState } from 'react';
+import React from 'react';
 
 export default function Home() {
-  const [imei, setImei] = useState('');
-  const [result, setResult] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch('/api/check', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imei }),
-    });
-    const data = await res.json();
-    setResult(data);
-  };
-
   return (
-    <>
-      <Head>
-        <title>Apple IMEI Checker</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
-      <div style={styles.container}>
-        <div style={styles.left}>
-          <div style={styles.card}>
-            <img src="/Apple_logo_black.svg" alt="Apple Logo" style={styles.logo} />
-            <h1 style={styles.title}>ตรวจสอบเครื่อง Apple</h1>
-
-            <form onSubmit={handleSubmit} style={styles.form}>
-              <input
-                type="text"
-                placeholder="กรอก IMEI หรือ Serial Number"
-                value={imei}
-                onChange={(e) => setImei(e.target.value)}
-                style={styles.input}
-              />
-              <button type="submit" style={styles.button}>
-                🔍 ตรวจสอบตอนนี้
-              </button>
-            </form>
-
-            {result && (
-              <div style={styles.resultBox}>
-                <h3 style={styles.resultTitle}>ผลลัพธ์:</h3>
-                <ul style={styles.resultList}>
-                  <li>📱 รุ่น: {result.model}</li>
-                  <li>🎨 สี: {result.color}</li>
-                  <li>💾 ความจุ: {result.capacity}</li>
-                  <li>🔐 iCloud: {result.icloud}</li>
-                  <li>🌍 ประเทศ: {result.country}</li>
-                  <li>⛔ สถานะ: {result.blacklist}</li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div style={styles.right}>
-          <img src="/steve-jobs.webp" alt="Steve Jobs" style={styles.image} />
-          <p style={styles.quote}>ข้าคือคนปลุกสตีฟจ็อป</p>
-        </div>
+    <div style={styles.container}>
+      {/* ด้านซ้าย: กล่องกรอก IMEI */}
+      <div style={styles.card}>
+        <img
+          src="/Apple_logo_black.svg"
+          alt="Apple Logo"
+          style={styles.logo}
+        />
+        <h1 style={styles.title}>ตรวจสอบเครื่อง Apple</h1>
+        <input
+          type="text"
+          placeholder="กรอก IMEI หรือ Serial Number"
+          style={styles.input}
+        />
+        <button style={styles.button}>
+          🔍 ตรวจสอบตอนนี้
+        </button>
       </div>
-    </>
+
+      {/* ด้านขวา: ภาพสตีฟจ็อบส์ */}
+      <div style={styles.imageContainer}>
+        <img
+          src="/Steve-Jobs.jpg"
+          alt="Steve Jobs"
+          style={styles.image}
+        />
+      </div>
+    </div>
   );
 }
 
 const styles = {
   container: {
     display: 'flex',
-    minHeight: '100vh',
+    height: '100vh',
     backgroundColor: '#000',
     color: '#fff',
-  },
-  left: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '2rem',
+    fontFamily: 'sans-serif',
+    overflow: 'hidden',
   },
   card: {
-    backgroundColor: '#1c1c1e',
-    padding: '2rem',
-    borderRadius: '16px',
-    maxWidth: '400px',
-    width: '100%',
-    textAlign: 'center',
-    boxShadow: '0 0 20px rgba(0,0,0,0.5)',
-  },
-  logo: {
-    width: '60px',
-    marginBottom: '1rem',
-    filter: 'invert(1)',
-  },
-  title: {
-    fontSize: '1.6rem',
-    marginBottom: '1.5rem',
-  },
-  form: {
+    width: '50%',
+    backgroundColor: '#111',
+    padding: '60px 40px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '1rem',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '10px',
+    boxSizing: 'border-box',
+  },
+  logo: {
+    width: 60,
+    marginBottom: 20,
+    filter: 'invert(100%)',
+  },
+  title: {
+    fontSize: '28px',
+    fontWeight: 'bold',
+    marginBottom: 30,
   },
   input: {
-    padding: '0.8rem',
+    width: '80%',
+    padding: '12px 20px',
     borderRadius: '8px',
     border: 'none',
-    fontSize: '1rem',
-    textAlign: 'center',
-    width: '100%',
-    boxSizing: 'border-box',
+    marginBottom: 20,
+    fontSize: '16px',
   },
   button: {
-    backgroundColor: '#fff',
+    width: '80%',
+    padding: '12px 20px',
+    background: '#fff',
     color: '#000',
-    padding: '0.8rem',
     borderRadius: '8px',
-    border: 'none',
+    fontSize: '16px',
     fontWeight: 'bold',
-    fontSize: '1rem',
     cursor: 'pointer',
-    width: '100%',
-    boxSizing: 'border-box',
+    border: 'none',
+    transition: 'opacity 0.3s',
   },
-  resultBox: {
-    marginTop: '2rem',
-    backgroundColor: '#2c2c2e',
-    borderRadius: '12px',
-    padding: '1.2rem',
-    textAlign: 'left',
-  },
-  resultTitle: {
-    marginBottom: '0.5rem',
-  },
-  resultList: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-    lineHeight: '1.8',
-  },
-  right: {
-    flex: 1,
-    position: 'relative',
+  imageContainer: {
+    width: '50%',
     overflow: 'hidden',
   },
   image: {
     width: '100%',
     height: '100vh',
     objectFit: 'cover',
-  },
-  quote: {
-    position: 'absolute',
-    bottom: '2rem',
-    right: '2rem',
-    color: '#fff',
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    padding: '0.5rem 1rem',
-    borderRadius: '8px',
-    fontSize: '1rem',
+    objectPosition: 'top center',
   },
 };

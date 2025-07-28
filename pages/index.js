@@ -1,3 +1,4 @@
+// pages/index.js
 import Head from 'next/head';
 import { useState } from 'react';
 
@@ -22,45 +23,40 @@ export default function Home() {
         <title>Apple IMEI Checker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <div style={styles.container}>
+      <div style={styles.page}>
         <div style={styles.left}>
-          <div style={styles.card}>
-            <img src="/Apple_logo_black.svg" alt="Apple Logo" style={styles.logo} />
-            <h1 style={styles.title}>ตรวจสอบเครื่อง Apple</h1>
-
-            <form onSubmit={handleSubmit} style={styles.form}>
-              <input
-                type="text"
-                placeholder="กรอก IMEI หรือ Serial Number"
-                value={imei}
-                onChange={(e) => setImei(e.target.value)}
-                style={styles.input}
-              />
-              <button type="submit" style={styles.button}>
-                🔍 ตรวจสอบตอนนี้
-              </button>
-            </form>
-
-            {result && (
-              <div style={styles.resultBox}>
-                <h3 style={styles.resultTitle}>ผลลัพธ์:</h3>
-                <ul style={styles.resultList}>
-                  <li>📱 รุ่น: {result.model}</li>
-                  <li>🎨 สี: {result.color}</li>
-                  <li>💾 ความจุ: {result.capacity}</li>
-                  <li>🔐 iCloud: {result.icloud}</li>
-                  <li>🌍 ประเทศ: {result.country}</li>
-                  <li>⛔ สถานะ: {result.blacklist}</li>
-                </ul>
-              </div>
-            )}
-          </div>
+          <img src="/Apple_logo_black.svg" alt="Apple Logo" style={styles.logo} />
+          <h1 style={styles.title}>ตรวจสอบเครื่อง <span style={{ color: '#fff' }}>Apple</span></h1>
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <input
+              type="text"
+              placeholder="กรอก IMEI หรือ Serial Number"
+              value={imei}
+              onChange={(e) => setImei(e.target.value)}
+              style={styles.input}
+            />
+            <button type="submit" style={styles.button}>
+              🔍 ตรวจสอบตอนนี้
+            </button>
+          </form>
+          {result && (
+            <div style={styles.resultBox}>
+              <h3 style={styles.resultTitle}>ผลลัพธ์:</h3>
+              <ul style={styles.resultList}>
+                <li>📱 รุ่น: {result.model}</li>
+                <li>🎨 สี: {result.color}</li>
+                <li>💾 ความจุ: {result.capacity}</li>
+                <li>🔐 iCloud: {result.icloud}</li>
+                <li>🌍 ประเทศ: {result.country}</li>
+                <li>⛔ สถานะ: {result.blacklist}</li>
+              </ul>
+            </div>
+          )}
         </div>
 
         <div style={styles.right}>
-          <img src="/steve-jobs.webp" alt="Steve Jobs" style={styles.image} />
-          <p style={styles.quote}>ข้าคือคนปลุกสตีฟจ็อป</p>
+          <img src="/Steave%20jobs.webp" alt="Steve Jobs" style={styles.jobs} />
+          <p style={styles.jobsText}>ข้าคือคนปลุกสตีฟจ็อป</p>
         </div>
       </div>
     </>
@@ -68,27 +64,26 @@ export default function Home() {
 }
 
 const styles = {
-  container: {
+  page: {
     display: 'flex',
-    minHeight: '100vh',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: '#000',
-    color: '#fff',
+    minHeight: '100vh',
+    padding: '2rem',
+    gap: '2rem',
+    flexWrap: 'wrap',
   },
   left: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '2rem',
-  },
-  card: {
+    flex: '1',
+    minWidth: '350px',
+    maxWidth: '500px',
     backgroundColor: '#1c1c1e',
     padding: '2rem',
     borderRadius: '16px',
-    maxWidth: '400px',
-    width: '100%',
+    color: '#fff',
+    boxShadow: '0 0 20px rgba(0,0,0,0.6)',
     textAlign: 'center',
-    boxShadow: '0 0 20px rgba(0,0,0,0.5)',
   },
   logo: {
     width: '60px',
@@ -96,8 +91,9 @@ const styles = {
     filter: 'invert(1)',
   },
   title: {
-    fontSize: '1.6rem',
+    fontSize: '1.8rem',
     marginBottom: '1.5rem',
+    color: '#fff',
   },
   form: {
     display: 'flex',
@@ -110,20 +106,16 @@ const styles = {
     border: 'none',
     fontSize: '1rem',
     textAlign: 'center',
-    width: '100%',
-    boxSizing: 'border-box',
   },
   button: {
     backgroundColor: '#fff',
     color: '#000',
     padding: '0.8rem',
-    borderRadius: '8px',
     border: 'none',
+    borderRadius: '8px',
     fontWeight: 'bold',
     fontSize: '1rem',
     cursor: 'pointer',
-    width: '100%',
-    boxSizing: 'border-box',
   },
   resultBox: {
     marginTop: '2rem',
@@ -142,23 +134,23 @@ const styles = {
     lineHeight: '1.8',
   },
   right: {
-    flex: 1,
+    flex: '1',
+    minWidth: '300px',
     position: 'relative',
-    overflow: 'hidden',
   },
-  image: {
+  jobs: {
     width: '100%',
-    height: '100vh',
+    height: 'auto',
     objectFit: 'cover',
   },
-  quote: {
+  jobsText: {
     position: 'absolute',
-    bottom: '2rem',
-    right: '2rem',
+    bottom: '5%',
+    right: '10%',
     color: '#fff',
+    fontSize: '1.2rem',
     backgroundColor: 'rgba(0,0,0,0.4)',
-    padding: '0.5rem 1rem',
-    borderRadius: '8px',
-    fontSize: '1rem',
+    padding: '0.3rem 1rem',
+    borderRadius: '10px',
   },
 };

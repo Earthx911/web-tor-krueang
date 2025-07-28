@@ -1,62 +1,99 @@
-
-import { useState } from "react";
+// pages/index.js
+import Head from 'next/head';
+import { useState } from 'react';
 
 export default function Home() {
-  const [imei, setImei] = useState("");
+  const [imei, setImei] = useState('');
   const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const handleCheck = async () => {
-    if (!imei) return;
-    setLoading(true);
-    try {
-      const fakeResult = {
-        model: "iPhone 13 Pro Max",
-        color: "Graphite",
-        capacity: "256GB",
-        icloud: "เปิดอยู่ (Activation Lock On)",
-        country: "ประเทศไทย",
-        status: "ไม่ติด Blacklist"
-      };
-      await new Promise((r) => setTimeout(r, 1500));
-      setResult(fakeResult);
-    } catch (err) {
-      console.error(err);
-    }
-    setLoading(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch('/api/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imei }),
+    });
+    const data = await res.json();
+    setResult(data);
   };
 
   return (
-    <main className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold text-center mb-4">เว็บตรวจเครื่อง</h1>
-        <p className="text-center text-gray-600 mb-6">กรอก IMEI หรือ Serial Number เพื่อดูข้อมูลเครื่อง</p>
-        <input
-          type="text"
-          value={imei}
-          onChange={(e) => setImei(e.target.value)}
-          placeholder="ใส่ IMEI หรือ Serial Number"
-          className="w-full border rounded-xl p-3 mb-4 focus:outline-none focus:ring focus:border-blue-500"
-        />
-        <button
-          onClick={handleCheck}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white rounded-xl p-3 font-semibold hover:bg-blue-700 disabled:opacity-50"
-        >
-          {loading ? "กำลังตรวจสอบ..." : "ตรวจสอบตอนนี้"}
-        </button>
-
+    <>
+      <Head>
+        <title>ตรวจสอบเครื่อง iPhone</title>
+      </Head>
+      <div style={styles.container}>
+        <img src="/apple-logo.png" alt="Apple" style={styles.logo} />
+        <h1 style={styles.title}>เว็บตรวจเครื่อง</h1>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <input
+            type="text"
+            placeholder="กรอก IMEI หรือ Serial Number"
+            value={imei}
+            onChange={(e) => setImei(e.target.value)}
+            style={styles.input}
+          />
+          <button type="submit" style={styles.button}>ตรวจสอบตอนนี้</button>
+        </form>
         {result && (
-          <div className="mt-6 text-sm text-gray-800 space-y-2">
-            <div><strong>รุ่น:</strong> {result.model}</div>
-            <div><strong>สี:</strong> {result.color}</div>
-            <div><strong>ความจุ:</strong> {result.capacity}</div>
-            <div><strong>iCloud:</strong> {result.icloud}</div>
-            <div><strong>ประเทศ:</strong> {result.country}</div>
-            <div><strong>สถานะ:</strong> {result.status}</div>
+          <div style={styles.result}>
+            <p>รุ่น: {result.model}</p>
+            <p>สี: {result.color}</p>
+            <p>ความจุ: {result.capacity}</p>
+            <p>iCloud: {result.icloud}</p>
+            <p>ประเทศ: {result.country}</p>
+            <p>สถานะ: {result.blacklist}</p>
           </div>
         )}
       </div>
-    </main>
+    </>
   );
 }
+
+const styles = {
+  container: {
+    backgroundColor: '#111',
+    color: '#fff',
+    minHeight: '100vh',
+    padding: '2rem',
+    textAlign: 'center',
+  },
+  logo: {
+    width: '60px',
+    marginBottom: '1rem',
+  },
+  title: {
+    fontSize: '1.8rem',
+    marginBottom: '1rem',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    alignItems: 'center',
+  },
+  input: {
+    padding: '0.8rem',
+    width: '80%',
+    maxWidth: '400px',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '1rem',
+  },
+  button: {
+    backgroundColor: '#fff',
+    color: '#111',
+    border: 'none',
+    padding: '0.7rem 1.5rem',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+  },
+  result: {
+    marginTop: '2rem',
+    textAlign: 'left',
+    maxWidth: '400px',
+    marginInline: 'auto',
+    lineHeight: '1.6',
+  },
+};

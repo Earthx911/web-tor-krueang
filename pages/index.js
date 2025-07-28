@@ -20,14 +20,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>ตรวจสอบเครื่อง Apple</title>
+        <title>Apple IMEI Checker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <div style={styles.container}>
-        <div style={styles.leftBox}>
+      <div style={styles.page}>
+        <div style={styles.left}>
           <img src="/Apple_logo_black.svg" alt="Apple Logo" style={styles.logo} />
-          <h1 style={styles.title}>ตรวจสอบเครื่อง Apple</h1>
+          <h1 style={styles.title}>ตรวจสอบเครื่อง <span style={{ color: '#fff' }}>Apple</span></h1>
           <form onSubmit={handleSubmit} style={styles.form}>
             <input
               type="text"
@@ -36,9 +35,10 @@ export default function Home() {
               onChange={(e) => setImei(e.target.value)}
               style={styles.input}
             />
-            <button type="submit" style={styles.button}>🔍 ตรวจสอบตอนนี้</button>
+            <button type="submit" style={styles.button}>
+              🔍 ตรวจสอบตอนนี้
+            </button>
           </form>
-
           {result && (
             <div style={styles.resultBox}>
               <h3 style={styles.resultTitle}>ผลลัพธ์:</h3>
@@ -54,9 +54,9 @@ export default function Home() {
           )}
         </div>
 
-        <div style={styles.rightBox}>
-          <img src="/stevejobs.webp" alt="Steve Jobs" style={styles.jobsImage} />
-          <p style={styles.caption}>ข้าคือคนปลุกสตีฟจ็อป</p>
+        <div style={styles.right}>
+          <img src="/Steave%20jobs.webp" alt="Steve Jobs" style={styles.jobs} />
+          <p style={styles.jobsText}>ข้าคือคนปลุกสตีฟจ็อป</p>
         </div>
       </div>
     </>
@@ -64,45 +64,41 @@ export default function Home() {
 }
 
 const styles = {
-  container: {
+  page: {
     display: 'flex',
-    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#000',
     minHeight: '100vh',
-    backgroundColor: '#0d0d0d',
+    padding: '2rem',
+    gap: '2rem',
+    flexWrap: 'wrap',
+  },
+  left: {
+    flex: '1',
+    minWidth: '350px',
+    maxWidth: '500px',
+    backgroundColor: '#1c1c1e',
+    padding: '2rem',
+    borderRadius: '16px',
     color: '#fff',
-  },
-  leftBox: {
-    flex: 1,
-    padding: '3rem',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  rightBox: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    position: 'relative',
-    overflow: 'hidden',
+    boxShadow: '0 0 20px rgba(0,0,0,0.6)',
+    textAlign: 'center',
   },
   logo: {
-    width: '48px',
-    marginBottom: '1.2rem',
+    width: '60px',
+    marginBottom: '1rem',
+    filter: 'invert(1)',
   },
   title: {
     fontSize: '1.8rem',
-    fontWeight: 'bold',
     marginBottom: '1.5rem',
+    color: '#fff',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
-    width: '100%',
-    maxWidth: '400px',
   },
   input: {
     padding: '0.8rem',
@@ -115,6 +111,7 @@ const styles = {
     backgroundColor: '#fff',
     color: '#000',
     padding: '0.8rem',
+    border: 'none',
     borderRadius: '8px',
     fontWeight: 'bold',
     fontSize: '1rem',
@@ -125,8 +122,7 @@ const styles = {
     backgroundColor: '#2c2c2e',
     borderRadius: '12px',
     padding: '1.2rem',
-    width: '100%',
-    maxWidth: '400px',
+    textAlign: 'left',
   },
   resultTitle: {
     marginBottom: '0.5rem',
@@ -137,20 +133,24 @@ const styles = {
     margin: 0,
     lineHeight: '1.8',
   },
-  jobsImage: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    opacity: 0.85,
+  right: {
+    flex: '1',
+    minWidth: '300px',
+    position: 'relative',
   },
-  caption: {
-    color: '#f0f0f0',
+  jobs: {
+    width: '100%',
+    height: 'auto',
+    objectFit: 'cover',
+  },
+  jobsText: {
     position: 'absolute',
-    bottom: '1.5rem',
-    fontSize: '1.3rem',
-    fontWeight: 300,
+    bottom: '5%',
+    right: '10%',
+    color: '#fff',
+    fontSize: '1.2rem',
     backgroundColor: 'rgba(0,0,0,0.4)',
-    padding: '0.5rem 1rem',
-    borderRadius: '12px',
+    padding: '0.3rem 1rem',
+    borderRadius: '10px',
   },
 };
